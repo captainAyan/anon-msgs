@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { reset } from "../features/message/messageSlice";
+import { useSelector } from "react-redux";
 
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -28,8 +27,9 @@ export default function Message() {
   const { recipient } = useParams();
   const [usernameChecked, setUsernameChecked] = useState(false);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { user } = useSelector((state) => state.auth);
 
   const onChange = (e) => {
     if (message.trim().length <= 1000) {
@@ -65,10 +65,7 @@ export default function Message() {
     };
 
     validateRecipientUsername();
-    return () => {
-      dispatch(reset());
-    };
-  }, [recipient, dispatch]);
+  }, [recipient]);
 
   return (
     <Box
@@ -120,18 +117,22 @@ export default function Message() {
           Send
         </LoadingButton>
 
-        <Button
-          sx={{ marginTop: "16px" }}
-          onClick={() => {
-            navigate("/register");
-          }}
-          size="large"
-          variant="outlined"
-          fullWidth
-          color="primary"
-        >
-          Create Your Own
-        </Button>
+        {user ? (
+          <></>
+        ) : (
+          <Button
+            sx={{ marginTop: "16px" }}
+            onClick={() => {
+              navigate("/register");
+            }}
+            size="large"
+            variant="outlined"
+            fullWidth
+            color="primary"
+          >
+            Create Your Own
+          </Button>
+        )}
       </Box>
     </Box>
   );
