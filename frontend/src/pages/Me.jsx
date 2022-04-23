@@ -14,13 +14,15 @@ import {
   Card,
   CardContent,
   CardActions,
+  Snackbar,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 export default function Me() {
   const [helperText, setHelperText] = useState("");
   const [errorHelperText, setErrorHelperText] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,6 +51,11 @@ export default function Me() {
     // };
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
+  const baseUrl =
+    !process.env.NODE_ENV || process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://anon-msgs.herokuapp.com";
+
   const [formData, setFormData] = useState({
     name: user ? user.name : "",
     username: user ? user.username : "",
@@ -75,6 +82,11 @@ export default function Me() {
     dispatch(deleteAccount());
   };
 
+  const copyLink = () => {
+    navigator.clipboard.writeText(`${baseUrl}/m/${user.username}`);
+    setOpenSnackbar(true);
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -86,6 +98,38 @@ export default function Me() {
 
   return (
     <>
+      <Box
+        sx={{
+          marginTop: 2,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Typography variant="h6" gutterBottom component="div">
+          Sharable Link
+        </Typography>
+
+        <TextField
+          margin="normal"
+          fullWidth
+          id="link"
+          name="link"
+          label="Link"
+          disabled
+          value={`${baseUrl}/m/${user.username}`}
+        />
+
+        <Button
+          sx={{ marginTop: "16px" }}
+          onClick={copyLink}
+          size="large"
+          variant="contained"
+          fullWidth
+          color="primary"
+        >
+          Copy Link
+        </Button>
+      </Box>
       <Box
         sx={{
           marginTop: 2,
@@ -137,7 +181,7 @@ export default function Me() {
 
           <Button
             sx={{ width: "100%", marginTop: "16px" }}
-            onClick={() => setOpen(true)}
+            onClick={() => setOpenModal(true)}
             size="large"
             variant="outlined"
             fullWidth
@@ -149,9 +193,9 @@ export default function Me() {
       </Box>
       <>
         <Modal
-          open={open}
+          open={openModal}
           onClose={() => {
-            setOpen(false);
+            setOpenModal(false);
           }}
         >
           <Card sx={style}>
@@ -177,7 +221,7 @@ export default function Me() {
               </LoadingButton>
 
               <Button
-                onClick={() => setOpen(false)}
+                onClick={() => setOpenModal(false)}
                 size="large"
                 variant="text"
               >
@@ -186,6 +230,17 @@ export default function Me() {
             </CardActions>
           </Card>
         </Modal>
+      </>
+      <>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={() => {
+            setOpenSnackbar(false);
+          }}
+          message="Copied to Clipboard 📋"
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        />
       </>
     </>
   );
