@@ -99,7 +99,7 @@ export default function Login() {
         <FormHelperText error={true}>{helperText}</FormHelperText>
 
         <LoadingButton
-          sx={{ width: "100%", marginTop: "16px" }}
+          sx={{ marginTop: "16px" }}
           onClick={handleSubmit}
           loading={isLoading}
           size="large"
@@ -111,7 +111,7 @@ export default function Login() {
         </LoadingButton>
 
         <Button
-          sx={{ width: "100%", marginTop: "16px" }}
+          sx={{ marginTop: "16px" }}
           size="large"
           variant="outlined"
           fullWidth={true}

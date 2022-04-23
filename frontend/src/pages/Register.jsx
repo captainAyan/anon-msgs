@@ -129,7 +129,7 @@ export default function Register() {
         <FormHelperText error={true}>{helperText}</FormHelperText>
 
         <LoadingButton
-          sx={{ width: "100%", marginTop: "16px" }}
+          sx={{ marginTop: "16px" }}
           onClick={handleSubmit}
           loading={isLoading}
           size="large"
@@ -140,7 +140,7 @@ export default function Register() {
           Register
         </LoadingButton>
         <Button
-          sx={{ width: "100%", marginTop: "16px" }}
+          sx={{ marginTop: "16px" }}
           size="large"
           variant="outlined"
           fullWidth={true}

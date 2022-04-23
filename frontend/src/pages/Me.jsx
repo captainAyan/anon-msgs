@@ -168,7 +168,7 @@ export default function Me() {
           <FormHelperText error={errorHelperText}>{helperText}</FormHelperText>
 
           <LoadingButton
-            sx={{ width: "100%", marginTop: "16px" }}
+            sx={{ marginTop: "16px" }}
             onClick={handleSubmit}
             loading={isLoading}
             size="large"
@@ -180,7 +180,7 @@ export default function Me() {
           </LoadingButton>
 
           <Button
-            sx={{ width: "100%", marginTop: "16px" }}
+            sx={{ marginTop: "16px" }}
             onClick={() => setOpenModal(true)}
             size="large"
             variant="outlined"

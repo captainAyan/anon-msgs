@@ -109,7 +109,7 @@ export default function Message() {
         <FormHelperText error={isError}>{helperText}</FormHelperText>
 
         <LoadingButton
-          sx={{ width: "100%", marginTop: "16px" }}
+          sx={{ marginTop: "16px" }}
           onClick={handleSubmit}
           loading={isLoading}
           size="large"
@@ -121,7 +121,7 @@ export default function Message() {
         </LoadingButton>
 
         <Button
-          sx={{ width: "100%", marginTop: "16px" }}
+          sx={{ marginTop: "16px" }}
           onClick={() => {
             navigate("/register");
           }}
