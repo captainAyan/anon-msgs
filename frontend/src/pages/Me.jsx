@@ -46,9 +46,9 @@ export default function Me() {
       navigate("/login");
     }
 
-    // return () => {
-    //   dispatch(reset());
-    // };
+    return () => {
+      dispatch(reset());
+    };
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const baseUrl =
@@ -116,7 +116,7 @@ export default function Me() {
           name="link"
           label="Link"
           disabled
-          value={`${baseUrl}/m/${user.username}`}
+          value={user ? `${baseUrl}/m/${user.username}` : ""}
         />
 
         <Button
