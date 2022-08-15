@@ -15,7 +15,15 @@ const protect = asyncHandler(async (req, res, next) => {
     // Verify token
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
-    req.user = await User.findById(decoded.id).select("-password");
+    const user = await User.findById(decoded.id).select("-password");
+
+    if (!user) {
+      const error = new Error("User does not exist");
+      error.status = StatusCodes.BAD_REQUEST;
+      next(error);
+    }
+
+    req.user = user;
 
     next();
   } else {
